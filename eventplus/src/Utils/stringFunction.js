@@ -10,3 +10,5 @@ export const dateFormatDbToView = data => {
     data = data.split("-");//retorna um array [2023,09,30]
     return `${data[2]}/${data[1]}/${data[0]}`;//retorna 30/09/2023
 }
+
+
