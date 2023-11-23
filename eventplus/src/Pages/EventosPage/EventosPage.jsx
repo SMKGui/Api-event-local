@@ -10,7 +10,6 @@ import api from "../../Services/Service";
 import Notification from "../../Components/Notification/Notification";
 import Spinner from "../../Components/Spinner/Spinner";
 import TableEv from "./TableEv/TableEv";
-import dateFormatDbToView from "../../Utils/stringFunction";
 
 const EventosPage = () => {
   const [frmEdit, setFrmEdit] = useState(false);
@@ -23,7 +22,7 @@ const EventosPage = () => {
   const [notifyUser, setNotifyUser] = useState({});
 
   const [idTipoEvento, setIdTipoEvento] = useState(null);
-  
+
   const [idInstituicao, setIdInstituicao] = useState(null);
 
   const [nome, setNome] = useState("");
@@ -34,7 +33,7 @@ const EventosPage = () => {
   useEffect(() => {
     //chamar a api
     async function getEventos() {
-      setShowSpinner(true); 
+      setShowSpinner(true);
       try {
         const promise = await api.get("/Evento");
 
@@ -43,7 +42,7 @@ const EventosPage = () => {
       } catch (error) {
         alert("Deu ruim na api");
       }
-      setShowSpinner(false); 
+      setShowSpinner(false);
     }
     getEventos();
     console.log("A HOME FOI MONTADA!!!");
@@ -53,13 +52,19 @@ const EventosPage = () => {
     //parar o submit do formulario
     e.preventDefault();
     //validar pelo menos 3 caracteres
-    if (titulo.trim().length < 3) {
-      alert("O Título deve ter no mínimo 3 caracteres");
+    if (nome.trim().length < 3) {
+      alert("O Nome deve ter no mínimo 3 caracteres");
       return;
     }
     //chamar a api
     try {
-      const retorno = await api.post("/Evento", { titulo: titulo });
+      const retorno = await api.post("/Evento", {
+        nomeEvento: nome,
+        descricao: descricao,
+        dataEvento: data,
+        idTipoEvento: tipoEvento,
+        //idInstituicao: idInstituicao,
+      });
 
       setNotifyUser({
         titleNote: "Sucesso",
@@ -70,11 +75,15 @@ const EventosPage = () => {
         showMessage: true,
       });
       console.log(retorno.data);
-      setTitulo(""); //limpa variável
+      setNome("");
+      setDescricao("");
+      setData("");
+      setIdTipoEvento("");
+      //setIdInstituicao("")
+       //limpa variável
 
       const retornoGet = await api.get("/Evento");
       setEventos(retornoGet.data);
-
     } catch (error) {
       console.log("Deu ruim na api:");
       console.log(error);
@@ -129,20 +138,20 @@ const EventosPage = () => {
       <section className="cadastro-evento-section">
         <Container>
           <div className="cadastro-evento__box">
-
-            <Title titleText={"Página de Eventos"}/>
+            <Title titleText={"Página de Eventos"} />
 
             <ImageIllustrator
-            alterText={"?????"}
-            imageRender={eventTypeImage}
+              alterText={"?????"}
+              imageRender={eventTypeImage}
             />
 
-            <form className="ftipo-evento"
-            onSubmit={frmEdit ? handleUpdate : handleSubmit}
+            <form
+              className="ftipo-evento"
+              onSubmit={frmEdit ? handleUpdate : handleSubmit}
             >
               {!frmEdit ? (
                 <>
-                 <Input
+                  <Input
                     type={"text"}
                     id={"nome"}
                     name={"nome"}
@@ -153,7 +162,7 @@ const EventosPage = () => {
                       setNome(e.target.value);
                     }}
                   />
-                 <Input
+                  <Input
                     type={"text"}
                     id={"descricao"}
                     name={"descricao"}
@@ -164,7 +173,7 @@ const EventosPage = () => {
                       setDescricao(e.target.value);
                     }}
                   />
-                 <Input
+                  <Input
                     type={"text"}
                     id={"tipoEvento"}
                     name={"tipoEvento"}
@@ -175,7 +184,7 @@ const EventosPage = () => {
                       setTipoEvento(e.target.value);
                     }}
                   />
-                 <Input
+                  <Input
                     type={"text"}
                     id={"data"}
                     name={"data"}
@@ -234,11 +243,11 @@ const EventosPage = () => {
       <section className="lista-eventos-section">
         <Container>
           <Title titleText={"Lista de Eventos"} color="white" />
-            <TableEv
+          <TableEv
             dados={eventos}
             //fnUpdate={showUpdateForm}
             fnDelete={handleDelete}
-            />          
+          />
         </Container>
       </section>
     </MainContent>

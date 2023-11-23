@@ -6,7 +6,7 @@ const Title = ({ titleText, additionalClass = "", color = "" }) => {
   return (
     <h1 className={`title ${additionalClass}`} style={{ color: color }}>
       {titleText}
-      <hr style={{ borderColor: color }} />
+      <hr className="title__underscore" style={{ borderColor: color }} />
       {/* <Banner/> */}
     </h1>
   );
