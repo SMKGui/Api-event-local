@@ -23,7 +23,7 @@ const EventosPage = () => {
 
   const [idTipoEvento, setIdTipoEvento] = useState(null);
 
-  const [idInstituicao, setIdInstituicao] = useState(null);
+  const [instituicao, setInstituicao] = useState([]);
 
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
@@ -37,8 +37,10 @@ const EventosPage = () => {
       try {
         const promise = await api.get("/Evento");
 
+        const retornoInstituicao = await api.get("/Instituicao")
         console.log(promise.data);
         setEventos(promise.data);
+        setInstituicao(retornoInstituicao.data[0].idInstituicao);
       } catch (error) {
         alert("Deu ruim na api");
       }
@@ -49,23 +51,31 @@ const EventosPage = () => {
   }, []);
 
   async function handleSubmit(e) {
-    //parar o submit do formulario
+    //para o submit do formulario
     e.preventDefault();
     //validar pelo menos 3 caracteres
     if (nome.trim().length < 3) {
-      alert("O Nome deve ter no mínimo 3 caracteres");
+      setNotifyUser({
+        titleNote: "Erro",
+        textNote: `O titulo deve conter mais de 3 caracteres!`,
+        imgIcon: "warning",
+        imgAlt:
+          "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+        showMessage: true,
+      });
       return;
     }
-    //chamar a api
+
     try {
-      const retorno = await api.post("/Evento", {
+      const retornoEvento = await api.post("/Evento", {
+        dataEvento: data,
         nomeEvento: nome,
         descricao: descricao,
-        dataEvento: data,
         idTipoEvento: tipoEvento,
-        //idInstituicao: idInstituicao,
+        idInstituicao: instituicao,
       });
-
+      const retornoGet = await api.get("/Evento");
+      setEventos(retornoGet.data);
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Cadastrado com sucesso!`,
@@ -74,21 +84,22 @@ const EventosPage = () => {
           "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
         showMessage: true,
       });
-      console.log(retorno.data);
+
+      console.log(retornoEvento.data);
       setNome("");
       setDescricao("");
+      setTipoEvento("");
       setData("");
-      setIdTipoEvento("");
-      //setIdInstituicao("")
-       //limpa variável
-
-      const retornoGet = await api.get("/Evento");
-      setEventos(retornoGet.data);
+      setInstituicao([]);
+      // setTipoEventos([]);
     } catch (error) {
-      console.log("Deu ruim na api:");
+      console.log("deu ruim na api");
       console.log(error);
     }
-  }
+
+   // chamar a api
+ }
+
 
   async function handleUpdate(e) {
     e.preventDefault();
@@ -253,5 +264,6 @@ const EventosPage = () => {
     </MainContent>
   );
 };
+
 
 export default EventosPage;

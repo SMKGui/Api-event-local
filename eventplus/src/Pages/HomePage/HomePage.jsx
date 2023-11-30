@@ -9,8 +9,10 @@ import Container from "../../Components/Container/Container";
 import VisionSection from "../../Components/VisionSection/VisionSection";
 import axios from "axios";
 import api from "../../Services/Service";
+import { UserContext } from "../../Context/AuthContext";
 
 const HomePage = () => {
+
   const [nextEvents, setNextEvents] = useState([]);
 
   useEffect(() => {
