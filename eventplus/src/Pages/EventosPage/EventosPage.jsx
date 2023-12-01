@@ -5,7 +5,7 @@ import ImageIllustrator from "../../Components/ImageIllustrator/ImageIllustrator
 import MainContent from "../../Components/MainContent/MainContent";
 import eventTypeImage from "../../assets/images/tipo-evento.svg";
 import Container from "../../Components/Container/Container";
-import { Input, Button } from "../../Components/FormComponents/FormComponents";
+import { Input, Button, Select } from "../../Components/FormComponents/FormComponents";
 import api from "../../Services/Service";
 import Notification from "../../Components/Notification/Notification";
 import Spinner from "../../Components/Spinner/Spinner";
@@ -18,6 +18,7 @@ const EventosPage = () => {
   const [titulo, setTitulo] = useState("");
 
   const [eventos, setEventos] = useState([]); //array mocado
+  const [tEvento, setTEvento] = useState([]);
 
   const [notifyUser, setNotifyUser] = useState({});
 
@@ -36,11 +37,14 @@ const EventosPage = () => {
       setShowSpinner(true);
       try {
         const promise = await api.get("/Evento");
-
+        const retorno = await api.get("/TiposEvento")
         const retornoInstituicao = await api.get("/Instituicao")
         console.log(promise.data);
         setEventos(promise.data);
         setInstituicao(retornoInstituicao.data[0].idInstituicao);
+        setTEvento(retorno.data)
+        
+
       } catch (error) {
         alert("Deu ruim na api");
       }
@@ -184,7 +188,7 @@ const EventosPage = () => {
                       setDescricao(e.target.value);
                     }}
                   />
-                  <Input
+                  {/*<Input
                     type={"text"}
                     id={"tipoEvento"}
                     name={"tipoEvento"}
@@ -194,9 +198,19 @@ const EventosPage = () => {
                     manipulationFunction={(e) => {
                       setTipoEvento(e.target.value);
                     }}
+                  />*/}
+                  <Select
+                  option={tEvento}
+                  name={"tEvento"}
+                  id={"tEvento"}
+                  manipulationFunction={(e) => {
+                    setTipoEvento(e.target.value)
+                  }}
+                  
+                  
                   />
                   <Input
-                    type={"text"}
+                    type={"date"}
                     id={"data"}
                     name={"data"}
                     placeholder={"Data"}

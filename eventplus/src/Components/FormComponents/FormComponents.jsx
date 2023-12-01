@@ -50,21 +50,35 @@ const dados = [
     {value: "12345", text: "Vestuário Masculino"},
     {value: "54321", text: "Vestuário Feminino"},
 ];
+export const Select = ({
+    option = [],
+    name,
+    id,
+    required,
+    additionalClass,
+    manipulationFunction = "",
+    defaultValue
 
-// export const Select = ({ dados = []}) => {
-//     return(
-//         <select
-//         id={id}
-//         name={name}
-//         required={required}
-//         className={`input-component ${additionalClass}`}
-//         onChange={manipulationFunction}
-//         value={defaultValue}
-//         >
-//             <option value="">Selecione</option>
-//             {dados.map((opt) => {
-//                 return <option key={opt.value} value={opt.value}>{opt.text}</option>
-//             })}
-//         </select>
-//     );
-// };
+
+
+}) => {
+    return (
+        <select
+            name={name}
+            id={id}
+            required={required}
+            className={`input-component ${additionalClass}`}
+            onChange={manipulationFunction}
+            value={defaultValue}
+        >
+            <option value="">Selecione</option>
+            {option.map((opt) => {
+                return (
+                    <option key={opt.idTipoEvento} value={opt.idTipoEvento}>{opt.titulo}</option>
+                )
+
+            })}
+        </select>
+
+    );
+}
