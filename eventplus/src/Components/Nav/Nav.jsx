@@ -38,7 +38,7 @@ const {userData} = useContext(UserContext)
           </>
         ) : (//if
         userData.role === "Comum" ? (
-          <Link to={"/eventos"} className="navbar__item">Eventos</Link>
+          <Link to="/eventos-aluno" className="navbar__item">Eventos</Link>
         )
         : (null)
         )}
