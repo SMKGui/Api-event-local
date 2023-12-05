@@ -35,15 +35,23 @@ const EventosAlunoPage = () => {
         setShowSpinner(true);
 
         try {
-           if (tipoEvento === "1"){
-            const promise = await api.get(`/Evento`);
-            setEventos(promise.data);
-           } else {
+          if (tipoEvento === "1") {
+            const promise = await api.get("/Evento");
+            const promiseEventos = await api.get(`/PresencasEvento/ListarMinhas/${userData.userId}`)
+    
+            const dadosMarcados = verificaPresenca(promise.data, promiseEventos.data);
+            console.clear();
+            console.log("DADOS MARCADOS");
+            console.log(dadosMarcados);
+    
+            setEventos(dadosMarcados);
+          } else {
             let arrEventos = [];
             const promiseEventos = await api.get(`/PresencasEvento/ListarMinhas/${userData.userId}`)
             promiseEventos.data.forEach((element) => {
-                arrEventos.push(element.evento)
+                arrEventos.push({...element.evento, situacao : element.situacao})
             });
+            setEventos(arrEventos);
            }
            
         } catch (error) {
@@ -54,7 +62,23 @@ const EventosAlunoPage = () => {
         setShowSpinner(false);
     }
     loadEventsType();
-  }, [tipoEvento]);
+  }, [tipoEvento, userData.userId]);
+
+  const verificaPresenca = (arrAllEvents, eventsUser) => {
+    for (let x = 0; x < arrAllEvents.length; x++) {
+      for (let i = 0; i < eventsUser.length; i++) {
+        if (arrAllEvents[x].idEvento === eventsUser[i].idEvento) {
+
+          arrAllEvents[x].situacao = true;
+          
+          break;
+
+        }
+
+      }
+    }
+    return arrAllEvents;
+  }
 
   // toggle meus eventos ou todos os eventos
   function myEvents(tpEvent) {
