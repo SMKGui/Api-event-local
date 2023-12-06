@@ -15,7 +15,7 @@ namespace webapi.event_.Controllers
 
         public PresencasEventoController()
         {
-           _presencasEventoRepository = new PresencaRepository();
+            _presencasEventoRepository = new PresencaRepository();
         }
 
         [HttpGet]
@@ -45,6 +45,35 @@ namespace webapi.event_.Controllers
             }
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
+        {
+            try
+            {
+                _presencasEventoRepository.Deletar(id);
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet("BuscarPorId/{id}")]
+        public IActionResult GetById(Guid id)
+        {
+            try
+            {
+                return Ok(_presencasEventoRepository.BuscarPorId(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+        }
+
         [HttpGet("ListarMinhas/{id}")]
         public IActionResult GetMyList(Guid id)
         {
@@ -52,7 +81,7 @@ namespace webapi.event_.Controllers
             {
                 return Ok(_presencasEventoRepository.ListarMinhas(id));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }

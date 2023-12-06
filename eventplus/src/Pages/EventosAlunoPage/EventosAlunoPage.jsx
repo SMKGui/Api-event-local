@@ -4,11 +4,13 @@ import MainContent from "../../Components/MainContent/MainContent";
 import Title from "../../Components/Title/Title";
 import Table from "./TableEvA/TableEvA";
 import Container from "../../Components/Container/Container";
-import { Select, Select2 } from "../../Components/FormComponents/FormComponents";
+import {
+  Select,
+  Select2,
+} from "../../Components/FormComponents/FormComponents";
 import Spinner from "../../Components/Spinner/Spinner";
 import Modal from "../../Components/Modal/Modal";
 import api from "../../Services/Service";
-
 
 import "./EventosAlunoPage.css";
 import { UserContext } from "../../Context/AuthContext";
@@ -30,55 +32,67 @@ const EventosAlunoPage = () => {
   // recupera os dados globais do usuário
   const { userData, setUserData } = useContext(UserContext);
 
-  useEffect(() => {
-    async function loadEventsType() {
-        setShowSpinner(true);
+  async function loadEventsType() {
+    setShowSpinner(true);
 
-        try {
-          if (tipoEvento === "1") {
-            const promise = await api.get("/Evento");
-            const promiseEventos = await api.get(`/PresencasEvento/ListarMinhas/${userData.userId}`)
-    
-            const dadosMarcados = verificaPresenca(promise.data, promiseEventos.data);
-            console.clear();
-            console.log("DADOS MARCADOS");
-            console.log(dadosMarcados);
-    
-            setEventos(dadosMarcados);
-          } else {
-            let arrEventos = [];
-            const promiseEventos = await api.get(`/PresencasEvento/ListarMinhas/${userData.userId}`)
-            promiseEventos.data.forEach((element) => {
-                arrEventos.push({...element.evento, situacao : element.situacao})
-            });
-            setEventos(arrEventos);
-           }
-           
-        } catch (error) {
-            console.log("Erro ao carregar os eventos");
-            console.log(error);
-        }
-        
-        setShowSpinner(false);
+    try {
+      if (tipoEvento === "1") {
+        const promise = await api.get("/Evento");
+        const promiseEventos = await api.get(
+          `/PresencasEvento/ListarMinhas/${userData.userId}`
+        );
+
+        const dadosMarcados = verificaPresenca(
+          promise.data,
+          promiseEventos.data
+        );
+        console.clear();
+        console.log("DADOS MARCADOS");
+        console.log(dadosMarcados);
+
+        setEventos(dadosMarcados);
+      } else {
+        let arrEventos = [];
+        const promiseEventos = await api.get(
+          `/PresencasEvento/ListarMinhas/${userData.userId}`
+        );
+        promiseEventos.data.forEach((element) => {
+          arrEventos.push({
+            ...element.evento,
+            situacao: element.situacao,
+            idPresencaEvento: element.idPresencaEvento,
+          });
+        });
+        setEventos(arrEventos);
+        console.log(promiseEventos.data);
+      }
+    } catch (error) {
+      console.log("Erro ao carregar os eventos");
+      console.log(error);
     }
+
+    setShowSpinner(false);
+  }
+
+  useEffect(() => {    
     loadEventsType();
   }, [tipoEvento, userData.userId]);
+
 
   const verificaPresenca = (arrAllEvents, eventsUser) => {
     for (let x = 0; x < arrAllEvents.length; x++) {
       for (let i = 0; i < eventsUser.length; i++) {
-        if (arrAllEvents[x].idEvento === eventsUser[i].idEvento) {
-
+        if (arrAllEvents[x].idEvento === eventsUser[i].evento.idEvento) {
           arrAllEvents[x].situacao = true;
-          
+
+          arrAllEvents[x].idPresencaEvento = eventsUser[i].idPresencaEvento;
+
           break;
-
         }
-
       }
     }
     return arrAllEvents;
-  }
+  };
 
   // toggle meus eventos ou todos os eventos
   function myEvents(tpEvent) {
@@ -89,16 +103,49 @@ const EventosAlunoPage = () => {
     return "????";
   }
 
-  const showHideModal = () => {
-    setShowModal(showModal ? false : true);
-  };
+  async function postMyComentary() {
+    return "????";
+  }
 
-  const commentaryRemove = () => {
+  const commentaryRemove = async () => {
     alert("Remover o comentário");
   };
 
-  function handleConnect() {
-    alert("Desenvolver a função conectar evento");
+  const showHideModal = async () => {
+    setShowModal(showModal ? false : true);
+  };
+
+
+  async function handleConnect(idEvent, whatTheFunction, idPresencaEvento = null) {
+    if (whatTheFunction === "connect") {
+      try {
+        const promise = await api.post("/PresencasEvento", {
+          situacao: true,
+          idUsuario: userData.userId,
+          idEvento: idEvent,
+        });
+
+        if (promise.status === 201) {
+          loadEventsType();
+          alert("Presença confirmada");
+        }
+      } catch (error) {
+        console.log("Erro ao conectar");
+        console.log(error);
+      }
+      return;
+    }
+
+   
+    try {
+      const promiseDelete = await api.delete("/PresencasEvento/" + idPresencaEvento);
+    if (promiseDelete.status = 204) {
+      loadEventsType();
+      alert("Desconectado do evento")
+    }
+    } catch (error) {
+      alert("Erro")
+    }
   }
   return (
     <>
@@ -134,6 +181,8 @@ const EventosAlunoPage = () => {
         <Modal
           userId={userData.userId}
           showHideModal={showHideModal}
+          fnGet={loadMyComentary}
+          fnPost={postMyComentary}
           fnDelete={commentaryRemove}
         />
       ) : null}

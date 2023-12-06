@@ -9,8 +9,9 @@ const Modal = ({
   comentaryText = "Não informado. Não informado. Não informado.",
   userId = null,
   showHideModal = false,
-  fnDelete = null,
-  fnNewCommentary = null
+  fnGet = null,
+  fnPost = null,
+  fnDelete = null
 
 }) => {
 
