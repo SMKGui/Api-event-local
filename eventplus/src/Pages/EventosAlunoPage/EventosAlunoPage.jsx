@@ -4,10 +4,7 @@ import MainContent from "../../Components/MainContent/MainContent";
 import Title from "../../Components/Title/Title";
 import Table from "./TableEvA/TableEvA";
 import Container from "../../Components/Container/Container";
-import {
-  Select,
-  Select2,
-} from "../../Components/FormComponents/FormComponents";
+import {Select2} from "../../Components/FormComponents/FormComponents";
 import Spinner from "../../Components/Spinner/Spinner";
 import Modal from "../../Components/Modal/Modal";
 import api from "../../Services/Service";
@@ -28,6 +25,10 @@ const EventosAlunoPage = () => {
   const [tipoEvento, setTipoEvento] = useState("1"); //código do tipo do Evento escolhido
   const [showSpinner, setShowSpinner] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  const [descricao, setDescricao] = useState("");
+  const [idUsuario, setIdUsuario] = useState("");
+  const [idEvento, setIdEvento] = useState("");
 
   // recupera os dados globais do usuário
   const { userData, setUserData } = useContext(UserContext);
@@ -103,7 +104,7 @@ const EventosAlunoPage = () => {
     return "????";
   }
 
-  async function postMyComentary() {
+  async function postMyComentary(IdEvento, descricao) {
     return "????";
   }
 

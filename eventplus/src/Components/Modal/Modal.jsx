@@ -11,7 +11,8 @@ const Modal = ({
   showHideModal = false,
   fnGet = null,
   fnPost = null,
-  fnDelete = null
+  fnDelete = null,
+  fnNewCommentary = null,
 
 }) => {
 
