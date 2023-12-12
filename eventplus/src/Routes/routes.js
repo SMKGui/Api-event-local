@@ -9,6 +9,7 @@ import Header from "../Components/Header/Header"
 import Footer from "../Components/Footer/Footer";
 import { PrivateRoute } from "../Routes/PrivateRoute";
 import EventosAlunoPage from "../Pages/EventosAlunoPage/EventosAlunoPage";
+import DetalhesEventoPage from "../Pages/DetalhesEventoPage/DetalhesEventoPage";
 
 const Rotas = () => {
   return (
@@ -44,6 +45,7 @@ const Rotas = () => {
 
         <Route element={<LoginPage />} path="/login" />
         <Route element={<TestesPage />} path="/testes" />
+        <Route element={<DetalhesEventoPage />} path="/detalhes" />
       </Routes>
       <Footer />
     </BrowserRouter>

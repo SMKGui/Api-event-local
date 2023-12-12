@@ -2,20 +2,19 @@ import React, { useContext, useEffect, useState } from "react";
 import Header from "../../Components/Header/Header";
 import MainContent from "../../Components/MainContent/MainContent";
 import Title from "../../Components/Title/Title";
-import Table from "./TableEvA/TableEvA";
+// import Table from "./TableEvA/TableEvA";
 import Container from "../../Components/Container/Container";
 import {Select2} from "../../Components/FormComponents/FormComponents";
 import Spinner from "../../Components/Spinner/Spinner";
 import Modal from "../../Components/Modal/Modal";
 import api from "../../Services/Service";
 
-import "./EventosAlunoPage.css";
 import { UserContext } from "../../Context/AuthContext";
 
-const EventosAlunoPage = () => {
+const DetalhesEventoPage = () => {
   // state do menu mobile
   const [exibeNavbar, setExibeNavbar] = useState(false);
-  const [eventos, setEventos] = useState([]);
+  
   // select mocado
   const [quaisEventos, setQuaisEventos] = useState([
     { value: "1", text: "Todos os eventos" },
@@ -156,7 +155,7 @@ const EventosAlunoPage = () => {
         <Container>
           <Title titleText={"Eventos"} additionalClass="custom-title" />
 
-          <Select2
+          {/* <Select2
             id="id-tipo-evento"
             name="tipo-evento"
             required={true}
@@ -164,21 +163,23 @@ const EventosAlunoPage = () => {
             manipulationFunction={(e) => myEvents(e.target.value)} // aqui só a variável state
             defaultValue={tipoEvento}
             additionalClass="select-tp-evento"
-          />
-          <Table
+          /> */}
+
+          {/* <Table
             dados={eventos}
             fnConnect={handleConnect}
             fnShowModal={() => {
               showHideModal();
             }}
-          />
+          /> */}
+
         </Container>
       </MainContent>
 
       {/* SPINNER -Feito com position */}
       {showSpinner ? <Spinner /> : null}
 
-      {showModal ? (
+      {/* {showModal ? (
         <Modal
           userId={userData.userId}
           showHideModal={showHideModal}
@@ -186,9 +187,9 @@ const EventosAlunoPage = () => {
           fnPost={postMyComentary}
           fnDelete={commentaryRemove}
         />
-      ) : null}
+      ) : null} */}
     </>
   );
 };
 
-export default EventosAlunoPage;
+export default DetalhesEventoPage;
