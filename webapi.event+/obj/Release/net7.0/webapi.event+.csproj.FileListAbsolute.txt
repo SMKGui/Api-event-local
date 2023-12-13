@@ -259,3 +259,6 @@ C:\Users\36992072854\Desktop\Api-event-local\webapi.event+\obj\Release\net7.0\we
 C:\Users\36992072854\Desktop\Api-event-local\webapi.event+\obj\Release\net7.0\webapi.event+.pdb
 C:\Users\36992072854\Desktop\Api-event-local\webapi.event+\obj\Release\net7.0\webapi.event+.genruntimeconfig.cache
 C:\Users\36992072854\Desktop\Api-event-local\webapi.event+\obj\Release\net7.0\ref\webapi.event+.dll
+C:\Users\36992072854\Desktop\Api-event-local\webapi.event+\bin\Release\net7.0\Microsoft.Azure.CognitiveServices.ContentModerator.dll
+C:\Users\36992072854\Desktop\Api-event-local\webapi.event+\bin\Release\net7.0\Microsoft.Rest.ClientRuntime.dll
+C:\Users\36992072854\Desktop\Api-event-local\webapi.event+\bin\Release\net7.0\Microsoft.Rest.ClientRuntime.Azure.dll

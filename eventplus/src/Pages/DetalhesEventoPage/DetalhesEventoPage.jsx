@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Header from "../../Components/Header/Header";
 import MainContent from "../../Components/MainContent/MainContent";
 import Title from "../../Components/Title/Title";
-// import Table from "./TableEvA/TableEvA";
+import Table from "./TableDeEv/TableDeEv";
 import Container from "../../Components/Container/Container";
 import {Select2} from "../../Components/FormComponents/FormComponents";
 import Spinner from "../../Components/Spinner/Spinner";
@@ -50,7 +50,7 @@ const DetalhesEventoPage = () => {
         console.log("DADOS MARCADOS");
         console.log(dadosMarcados);
 
-        setEventos(dadosMarcados);
+        //setEventos(dadosMarcados);
       } else {
         let arrEventos = [];
         const promiseEventos = await api.get(
@@ -63,7 +63,7 @@ const DetalhesEventoPage = () => {
             idPresencaEvento: element.idPresencaEvento,
           });
         });
-        setEventos(arrEventos);
+       //setEventos(arrEventos);
         console.log(promiseEventos.data);
       }
     } catch (error) {

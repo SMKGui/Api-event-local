@@ -40,7 +40,7 @@ const HomePage = () => {
       <section className="proximos-eventos">
         <Container>
           <Title titleText={"Próximos eventos"} />
-
+          {/* <Link to ={`detalhes-evento/${idEvento}`}>Detalhes do evento</Link> */}
           <div className="events-box">
             {nextEvents.map((e) => {
               return (
