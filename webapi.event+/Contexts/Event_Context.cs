@@ -30,10 +30,10 @@ namespace webapi.event_.Contexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //string de conexão local
-            //optionsBuilder.UseSqlServer("Server=DESKTOP-8UO2UT6; Database=webapi.event+gui+; User Id=sa; Pwd=Senai@134; TrustServerCertificate=true;");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-8UO2UT6; Database=webapi.event+gui+; User Id=sa; Pwd=Senai@134; TrustServerCertificate=true;");
 
             //string de conexão database azure
-            optionsBuilder.UseSqlServer("Server=tcp:eventguiluiz-server.database.windows.net,1433; Initial Catalog =eventGuiLuizDatabase; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30; User Id=eventguiluiz-server; Pwd=Senai@134;");
+            //optionsBuilder.UseSqlServer("Server=tcp:eventguiluiz-server.database.windows.net,1433; Initial Catalog =eventGuiLuizDatabase; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30; User Id=eventguiluiz-server; Pwd=Senai@134;");
 
            
             base.OnConfiguring(optionsBuilder);
