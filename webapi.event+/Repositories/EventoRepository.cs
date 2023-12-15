@@ -109,7 +109,7 @@ namespace webapi.event_.Repositories
                             IdInstituicao = e.IdInstituicao,
                             NomeFantasia = e.Instituicao!.NomeFantasia
                         }
-                    }).ToList();
+                    }).OrderBy(e => e.DataEvento).ToList();
             }
             catch (Exception)
             {
